@@ -1,0 +1,18 @@
+{
+  "name": "order-management-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build --workspace=apps/frontend && npm run build --workspace=apps/backend",
+    "dev": "npm run dev --workspace=apps/frontend && npm run dev --workspace=apps/backend",
+    "start": "npm run start --workspace=apps/frontend && npm run start --workspace=apps/backend",
+    "start:backend": "npm run start:dev --workspace=apps/backend",
+    "build:backend": "npm run build --workspace=apps/backend",
+    "start:frontend": "npm run dev --workspace=apps/frontend",
+    "build:frontend": "npm run build --workspace=apps/frontend"
+  }
+}

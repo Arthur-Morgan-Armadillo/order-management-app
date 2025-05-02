@@ -1,0 +1,33 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/apps/backend",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "types": [
+      "node", 
+      "@order-management-monorepo/libs/shared/interfaces", 
+      "@order-management-monorepo/libs/shared/enums", 
+      "@order-management-monorepo/libs/shared/types"
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/admin/*": ["./src/admin/*"],
+      "@/common/*": ["./src/common/*"],
+      "@/config/*": ["./src/config/*"],
+      "@/core/*": ["./src/core/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/shared/*": ["./src/shared/*"],
+      "@/user/*": ["./src/user/*"],
+    }
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "config",
+    "test",
+    "storage",
+    "**/*.spec.ts"
+  ]
+}
