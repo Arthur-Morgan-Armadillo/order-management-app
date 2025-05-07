@@ -1,33 +1,22 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/apps/backend",
-    "baseUrl": ".",
+    "composite": true,
+    "outDir": "./dist",
     "rootDir": ".",
-    "types": [
-      "node", 
-      "@order-management-monorepo/libs/shared/interfaces", 
-      "@order-management-monorepo/libs/shared/enums", 
-      "@order-management-monorepo/libs/shared/types"
-    ],
+    "baseUrl": ".",
+    "types": ["node"],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/admin/*": ["./src/admin/*"],
-      "@/common/*": ["./src/common/*"],
-      "@/config/*": ["./src/config/*"],
-      "@/core/*": ["./src/core/*"],
-      "@/services/*": ["./src/services/*"],
-      "@/shared/*": ["./src/shared/*"],
-      "@/user/*": ["./src/user/*"],
+      "@/*": ["src/*"],
+      "@/common/*": ["src/common/*"],
+      "@/database/*": ["src/database/*"],
+      "@/product/*": ["src/product/*"],
+      "@/user/*": ["src/user/*"],
+      "@/order/*": ["src/order/*"],
+      "@shared/*": ["../../libs/shared/dist/*"]
     }
   },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "config",
-    "test",
-    "storage",
-    "**/*.spec.ts"
-  ]
+  "include": ["src/**/*.ts", "prisma/seed.ts", "test/**/*.ts"],
+  "exclude": ["node_modules", "dist"],
+  "references": [{ "path": "../../libs/shared" }]
 }
