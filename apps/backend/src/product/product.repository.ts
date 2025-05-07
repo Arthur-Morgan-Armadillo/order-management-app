@@ -50,7 +50,7 @@ export class ProductRepository {
     }
   }
 
-  async updateProductStock(
+  async updateProductStockById(
     productId: string,
     quantity: number,
     tx: Prisma.TransactionClient,

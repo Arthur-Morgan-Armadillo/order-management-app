@@ -124,12 +124,12 @@ export class OrderService {
           throw new BadRequestException('Out of stock');
         }
 
-        await this.userRepository.updateUserBalance(
+        await this.userRepository.updateUserBalanceById(
           userId,
           serverTotalPrice,
           tx,
         );
-        await this.productRepository.updateProductStock(
+        await this.productRepository.updateProductStockById(
           productId,
           quantity,
           tx,

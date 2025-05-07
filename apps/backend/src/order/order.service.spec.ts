@@ -64,7 +64,7 @@ interface UserRepositoryMock {
   findUserById: jest.Mock<
     (userId: string, tx?: MockTransactionClient) => Promise<User | null>
   >;
-  updateUserBalance: jest.Mock<
+  updateUserBalanceById: jest.Mock<
     (
       userId: string,
       amount: Decimal,
@@ -74,14 +74,14 @@ interface UserRepositoryMock {
 }
 const createMockUserRepository = (): UserRepositoryMock => ({
   findUserById: jest.fn(),
-  updateUserBalance: jest.fn(),
+  updateUserBalanceById: jest.fn(),
 });
 
 interface ProductRepositoryMock {
   findProductById: jest.Mock<
     (productId: string, tx?: MockTransactionClient) => Promise<Product | null>
   >;
-  updateProductStock: jest.Mock<
+  updateProductStockById: jest.Mock<
     (
       productId: string,
       quantity: number,
@@ -91,7 +91,7 @@ interface ProductRepositoryMock {
 }
 const createMockProductRepository = (): ProductRepositoryMock => ({
   findProductById: jest.fn(),
-  updateProductStock: jest.fn(),
+  updateProductStockById: jest.fn(),
 });
 
 interface OrderRepositoryMock {
@@ -256,8 +256,8 @@ describe('OrderService', () => {
       userRepoMock.findUserById.mockResolvedValue(mockUser);
       productRepoMock.findProductById.mockResolvedValue(mockProduct);
       orderRepoMock.createOrder.mockResolvedValue(mockCreatedOrder);
-      userRepoMock.updateUserBalance.mockResolvedValue(undefined);
-      productRepoMock.updateProductStock.mockResolvedValue(undefined);
+      userRepoMock.updateUserBalanceById.mockResolvedValue(undefined);
+      productRepoMock.updateProductStockById.mockResolvedValue(undefined);
 
       const expectedResult: IOrder = {
         id: mockOrderId,
@@ -279,12 +279,12 @@ describe('OrderService', () => {
         mockProductId,
         mockTx,
       );
-      expect(userRepoMock.updateUserBalance).toHaveBeenCalledWith(
+      expect(userRepoMock.updateUserBalanceById).toHaveBeenCalledWith(
         mockUserId,
         mockCreatedOrder.totalPrice,
         mockTx,
       );
-      expect(productRepoMock.updateProductStock).toHaveBeenCalledWith(
+      expect(productRepoMock.updateProductStockById).toHaveBeenCalledWith(
         mockProductId,
         createOrderDto.quantity,
         mockTx,
@@ -311,8 +311,8 @@ describe('OrderService', () => {
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
       expect(productRepoMock.findProductById).not.toHaveBeenCalled();
-      expect(userRepoMock.updateUserBalance).not.toHaveBeenCalled();
-      expect(productRepoMock.updateProductStock).not.toHaveBeenCalled();
+      expect(userRepoMock.updateUserBalanceById).not.toHaveBeenCalled();
+      expect(productRepoMock.updateProductStockById).not.toHaveBeenCalled();
       expect(orderRepoMock.createOrder).not.toHaveBeenCalled();
     });
 
@@ -326,8 +326,8 @@ describe('OrderService', () => {
       });
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
-      expect(userRepoMock.updateUserBalance).not.toHaveBeenCalled();
-      expect(productRepoMock.updateProductStock).not.toHaveBeenCalled();
+      expect(userRepoMock.updateUserBalanceById).not.toHaveBeenCalled();
+      expect(productRepoMock.updateProductStockById).not.toHaveBeenCalled();
       expect(orderRepoMock.createOrder).not.toHaveBeenCalled();
     });
 
@@ -343,7 +343,7 @@ describe('OrderService', () => {
       });
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
-      expect(userRepoMock.updateUserBalance).not.toHaveBeenCalled();
+      expect(userRepoMock.updateUserBalanceById).not.toHaveBeenCalled();
     });
 
     it('should throw BadRequestException if user has insufficient balance', async () => {
@@ -358,7 +358,7 @@ describe('OrderService', () => {
       });
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
-      expect(userRepoMock.updateUserBalance).not.toHaveBeenCalled();
+      expect(userRepoMock.updateUserBalanceById).not.toHaveBeenCalled();
     });
 
     it('should throw BadRequestException if product is out of stock', async () => {
@@ -373,45 +373,45 @@ describe('OrderService', () => {
       });
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
-      expect(userRepoMock.updateUserBalance).not.toHaveBeenCalled();
-      expect(productRepoMock.updateProductStock).not.toHaveBeenCalled();
+      expect(userRepoMock.updateUserBalanceById).not.toHaveBeenCalled();
+      expect(productRepoMock.updateProductStockById).not.toHaveBeenCalled();
     });
 
-    it('should re-throw error and not call subsequent steps if updateUserBalance fails', async () => {
+    it('should re-throw error and not call subsequent steps if updateUserBalanceById fails', async () => {
       const updateError = new Error('Failed to update balance');
 
       userRepoMock.findUserById.mockResolvedValue(mockUser);
       productRepoMock.findProductById.mockResolvedValue(mockProduct);
-      userRepoMock.updateUserBalance.mockRejectedValue(updateError);
+      userRepoMock.updateUserBalanceById.mockRejectedValue(updateError);
 
       await expect(service.createOrder(createOrderDto)).rejects.toThrow(
         updateError,
       );
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
-      expect(userRepoMock.updateUserBalance).toHaveBeenCalledWith(
+      expect(userRepoMock.updateUserBalanceById).toHaveBeenCalledWith(
         mockUserId,
         mockCreatedOrder.totalPrice,
         mockTx,
       );
-      expect(productRepoMock.updateProductStock).not.toHaveBeenCalled();
+      expect(productRepoMock.updateProductStockById).not.toHaveBeenCalled();
       expect(orderRepoMock.createOrder).not.toHaveBeenCalled();
     });
 
-    it('should re-throw error and not call createOrder if updateProductStock fails', async () => {
+    it('should re-throw error and not call createOrder if updateProductStockById fails', async () => {
       const updateError = new Error('Failed to update stock');
 
       userRepoMock.findUserById.mockResolvedValue(mockUser);
       productRepoMock.findProductById.mockResolvedValue(mockProduct);
-      userRepoMock.updateUserBalance.mockResolvedValue(undefined);
-      productRepoMock.updateProductStock.mockRejectedValue(updateError);
+      userRepoMock.updateUserBalanceById.mockResolvedValue(undefined);
+      productRepoMock.updateProductStockById.mockRejectedValue(updateError);
 
       await expect(service.createOrder(createOrderDto)).rejects.toThrow(
         updateError,
       );
 
       expect(dbMock.$transaction).toHaveBeenCalledTimes(1);
-      expect(productRepoMock.updateProductStock).toHaveBeenCalledWith(
+      expect(productRepoMock.updateProductStockById).toHaveBeenCalledWith(
         mockProductId,
         createOrderDto.quantity,
         mockTx,
@@ -424,8 +424,8 @@ describe('OrderService', () => {
 
       userRepoMock.findUserById.mockResolvedValue(mockUser);
       productRepoMock.findProductById.mockResolvedValue(mockProduct);
-      userRepoMock.updateUserBalance.mockResolvedValue(undefined);
-      productRepoMock.updateProductStock.mockResolvedValue(undefined);
+      userRepoMock.updateUserBalanceById.mockResolvedValue(undefined);
+      productRepoMock.updateProductStockById.mockResolvedValue(undefined);
       orderRepoMock.createOrder.mockRejectedValue(createError);
 
       await expect(service.createOrder(createOrderDto)).rejects.toThrow(
