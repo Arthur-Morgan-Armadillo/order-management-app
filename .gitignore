@@ -3,24 +3,27 @@ node_modules/
 .pnp
 .pnp.js
 .yarn/install-state.gz
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
 # testing
 coverage/
 .nyc_output
 
-# next.js
-.next/
-out/
+# frontend
+apps/frontend/.next/
+apps/frontend/out/
+apps/frontend/dist
+apps/frontend/node_modules
 
-# nest.js
+# backend
 apps/backend/dist/
+apps/backend/node_modules
+
+# shared
+libs/shared/dist/
 
 # production
 build/
+*.swc
 
 # misc
 .DS_Store
@@ -28,7 +31,6 @@ build/
 .turbo/
 
 # logs & debug
-!logs
 logs/*
 *.log
 npm-debug.log*
@@ -53,12 +55,8 @@ environment
 # vercel
 .vercel
 
-# prisma migrations
-prisma/migrations/
-
 # typescript
 *.tsbuildinfo
-*.d.ts
 next-env.d.ts
 
 # IDEs and editors
@@ -86,6 +84,3 @@ pids
 *.pid
 *.seed
 *.pid.lock
-
-# docker ignore file
-.dockerignore

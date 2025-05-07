@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@shared/*": ["libs/shared/src/*"],
+      "@order-management-monorepo/apps/*": ["apps/*"],
+      "@order-management-monorepo/libs/*": ["libs/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

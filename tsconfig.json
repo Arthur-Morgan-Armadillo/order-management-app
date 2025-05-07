@@ -1,43 +1,10 @@
 {
-  "compilerOptions": {
-    "composite": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "declaration": true,
-    "declarationMap": true,
-    "removeComments": true,
-    "inlineSources": true,
-    "isolatedModules": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "target": "ES2021",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noEmitOnError": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strictBindCallApply": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true,
-    "strict": true,
-    "paths": {
-      "@order-management-monorepo/apps/*": ["apps/*"],
-      "@order-management-monorepo/libs/*": ["libs/*"]
-    }
-  },
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"],
+  "files": [],
   "references": [
     { "path": "./apps/backend" },
-    { "path": "./apps/frontend" },
     { "path": "./libs/shared" }
-  ]
+  ],
+  "compilerOptions": {
+    "composite": true
+  }
 }
