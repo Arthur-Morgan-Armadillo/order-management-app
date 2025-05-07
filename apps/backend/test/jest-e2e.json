@@ -5,5 +5,11 @@
   "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "globalSetup": "./global-setup.ts",
+  "globalTeardown": "./global-teardown.ts",
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/../src/$1",
+    "^@shared/interfaces/(.*)$": "<rootDir>/../../../libs/shared/interfaces/src/$1"
   }
 }
