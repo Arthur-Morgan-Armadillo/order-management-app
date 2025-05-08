@@ -1,5 +1,8 @@
 node_modules/
 dist/
+.next
+out
+build
 coverage
 .env*
 .git
@@ -23,6 +26,3 @@ next-env.d.ts
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-!libs/shared/
-libs/shared/dist

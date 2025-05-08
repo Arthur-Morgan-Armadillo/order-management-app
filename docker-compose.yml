@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env_file:
+      - .env.local
+    environment:
+      - POSTGRES_USER=${DB_USER:-order_manager}
+      - POSTGRES_PASSWORD=${DB_PASS:-q55h7gpa56glt}
+      - POSTGRES_DB=${DB_NAME:-order_management_app}
+    ports:
+      - "${DB_PORT_HOST:-5432}:${DB_PORT_CONTAINER:-5432}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-order_manager} -d ${DB_NAME:-order_management_app}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    restart: always
+    ports:
+      - "${BACKEND_PORT_HOST:-5005}:${BACKEND_PORT_CONTAINER:-5005}"
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${DB_USER:-order_manager}:${DB_PASS:-q55h7gpa56glt}@postgres:${DB_PORT_CONTAINER:-5432}/${DB_NAME:-order_management_app}
+      - PORT=${BACKEND_PORT_CONTAINER:-5005}
+      - THROTTLER_TTL=${THROTTLER_TTL:-60000}
+      - THROTTLER_LIMIT=${THROTTLER_LIMIT:-10}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    restart: always
+    ports:
+      - "${FRONTEND_PORT_HOST:-5000}:${FRONTEND_PORT_CONTAINER:-5000}"
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+      - PORT=${FRONTEND_PORT_CONTAINER:-5000}
+      - API_URL=http://backend:${BACKEND_PORT_HOST:-5005}/api/v1/
+    depends_on:
+      backend:
+        condition: service_started
+
+volumes:
+  db_data:
