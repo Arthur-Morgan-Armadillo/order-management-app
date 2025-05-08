@@ -10,7 +10,7 @@ import {
   Skeleton,
 } from '@/components';
 import { cn } from '@/lib/utils';
-import type { IOrderWithRelationsSanitized } from '@shared/interfaces';
+import type { IOrderWithRelationsSanitized } from '@/lib/interfaces';
 
 interface IUserOrdersTableProps {
   selectedUserId: string | null;

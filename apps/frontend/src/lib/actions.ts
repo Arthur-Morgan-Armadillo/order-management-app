@@ -8,13 +8,13 @@ import {
   containsSemicolonSpace,
   splitBySemicolonSpace,
 } from './utils';
-import type { FetchResult } from './interfaces';
 import type {
+  FetchResult,
   IUser,
   IProduct,
   IOrder,
   IOrderWithRelationsSanitized,
-} from '@shared/interfaces';
+} from '@/lib/interfaces';
 
 export const fetchAllUsers = async (): Promise<FetchResult<IUser[]>> => {
   const logger = getLogger();

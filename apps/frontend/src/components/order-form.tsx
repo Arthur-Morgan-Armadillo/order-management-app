@@ -22,10 +22,7 @@ import {
   Button,
 } from '@/components';
 import { createOrder } from '@/lib/actions';
-import type {
-  IUser,
-  IProduct,
-} from '@shared/interfaces';
+import type { IUser, IProduct } from '@/lib/interfaces';
 
 const orderFormSchema = z.object({
   userId: z.string().nonempty().uuid(),

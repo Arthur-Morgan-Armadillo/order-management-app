@@ -3,11 +3,7 @@
 import React, { use, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { OrderWorkspace } from './order-workspace';
-import type { FetchResult } from '@/lib/interfaces';
-import type {
-  IUser,
-  IProduct,
-} from '@shared/interfaces';
+import type { FetchResult, IUser, IProduct } from '@/lib/interfaces';
 
 interface IOrderManagerProps {
   userFetchResultPromise: Promise<FetchResult<IUser[]>>;

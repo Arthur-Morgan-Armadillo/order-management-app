@@ -9,7 +9,7 @@ import type {
   IUser,
   IProduct,
   IOrderWithRelationsSanitized,
-} from '@shared/interfaces';
+} from '@/lib/interfaces';
 
 interface IOrderWorkspaceProps {
   users: IUser[];

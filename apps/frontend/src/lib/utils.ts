@@ -4,7 +4,7 @@ import { getLogger } from './logger';
 import type {
   IServerSuccessResponse,
   IServerErrorResponse,
-} from '@shared/interfaces';
+} from '@/lib/interfaces';
 
 export const cn = (...inputs: ClassValue[]): string => {
   return twMerge(clsx(inputs));
