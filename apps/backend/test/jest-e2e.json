@@ -9,7 +9,6 @@
   "globalSetup": "./global-setup.ts",
   "globalTeardown": "./global-teardown.ts",
   "moduleNameMapper": {
-    "^@/(.*)$": "<rootDir>/../src/$1",
-    "^@shared/interfaces/(.*)$": "<rootDir>/../../../libs/shared/interfaces/src/$1"
+    "^@/(.*)$": "<rootDir>/../src/$1"
   }
 }

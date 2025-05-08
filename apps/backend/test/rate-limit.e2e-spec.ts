@@ -4,8 +4,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import request from 'supertest';
 import { beforeAll, afterAll, describe, it, expect } from '@jest/globals';
 import { AppModule } from '@/app.module';
-import { GlobalExceptionFilter } from '@/common';
-import { IServerErrorResponse } from '@shared/interfaces';
+import { GlobalExceptionFilter, IServerErrorResponse, EStatus } from '@/common';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -54,7 +53,7 @@ describe('Rate Limiting (e2e)', () => {
 
     const body: IServerErrorResponse = response_limit_exceeded.body;
     expect(body).toEqual({
-      status: 'error',
+      status: EStatus.Error,
       statusCode: HttpStatus.TOO_MANY_REQUESTS,
       message: expect.stringContaining('Rate limit exceeded'),
       error: 'ThrottlerException',

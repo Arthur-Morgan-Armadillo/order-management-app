@@ -12,13 +12,15 @@ import {
   expect,
 } from '@jest/globals';
 import { AppModule } from '@/app.module';
-import { DatabaseService } from '@/database/database.service';
-import { GlobalExceptionFilter, uuidRegex } from '@/common';
+import { DatabaseService } from '@/database';
 import {
+  GlobalExceptionFilter,
+  uuidRegex,
   IUser,
   IServerSuccessResponse,
   IServerErrorResponse,
-} from '@shared/interfaces';
+  EStatus,
+} from '@/common';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -84,7 +86,7 @@ describe('UserController (e2e)', () => {
 
       const body: IServerSuccessResponse<IUser[]> = response.body;
 
-      expect(body.status).toBe('success');
+      expect(body.status).toBe(EStatus.Success);
       expect(body.payload.data).toBeInstanceOf(Array);
       expect(body.payload.data.length).toBe(userSeedData.length);
 
@@ -118,7 +120,7 @@ describe('UserController (e2e)', () => {
         .expect('Content-Type', /json/);
 
       const body: IServerErrorResponse = response.body;
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.statusCode).toBe(HttpStatus.NOT_FOUND);
       expect(body.error).toBe('NotFoundException');
       expect(body.message).toBe('No users found');

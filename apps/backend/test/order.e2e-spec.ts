@@ -14,15 +14,17 @@ import {
 } from '@jest/globals';
 import { randomUUID } from 'node:crypto';
 import { AppModule } from '@/app.module';
-import { DatabaseService } from '@/database/database.service';
-import { GlobalExceptionFilter, uuidRegex } from '@/common';
-import { CreateOrderDto } from '@/order/dto/create-order.dto';
+import { DatabaseService } from '@/database';
+import { CreateOrderDto } from '@/order';
 import {
+  GlobalExceptionFilter,
+  uuidRegex,
   IOrder,
   IServerSuccessResponse,
   IServerErrorResponse,
   IOrderWithRelationsSanitized,
-} from '@shared/interfaces';
+  EStatus,
+} from '@/common';
 
 describe('OrderController (e2e)', () => {
   let app: INestApplication;
@@ -103,7 +105,7 @@ describe('OrderController (e2e)', () => {
       const body: IServerSuccessResponse<IOrderWithRelationsSanitized[]> =
         response.body;
 
-      expect(body.status).toBe('success');
+      expect(body.status).toBe(EStatus.Success);
       expect(body.payload.data).toBeInstanceOf(Array);
       expect(body.payload.data.length).toBe(1);
 
@@ -132,7 +134,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('No orders found');
       expect(body.error).toBe('NotFoundException');
     });
@@ -147,7 +149,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('User not found');
       expect(body.error).toBe('NotFoundException');
     });
@@ -178,7 +180,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerSuccessResponse<IOrder> = response.body;
 
-      expect(body.status).toBe('success');
+      expect(body.status).toBe(EStatus.Success);
       expect(body.payload.data.id).toMatch(uuidRegex);
       expect(body.payload.data.userId).toBe(createOrderDto.userId);
       expect(body.payload.data.productId).toBe(createOrderDto.productId);
@@ -258,7 +260,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('User not found');
       expect(body.error).toBe('NotFoundException');
     });
@@ -277,7 +279,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('Product not found');
       expect(body.error).toBe('NotFoundException');
     });
@@ -293,7 +295,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('Invalid total price');
       expect(body.error).toBe('BadRequestException');
     });
@@ -312,7 +314,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('Insufficient balance');
       expect(body.error).toBe('BadRequestException');
 
@@ -337,7 +339,7 @@ describe('OrderController (e2e)', () => {
 
       const body: IServerErrorResponse = response.body;
 
-      expect(body.status).toBe('error');
+      expect(body.status).toBe(EStatus.Error);
       expect(body.message).toBe('Out of stock');
       expect(body.error).toBe('BadRequestException');
 
