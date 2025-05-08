@@ -99,6 +99,11 @@ Each sub-app has its own `.env` template under `test_environment_*`. Copy and re
 
 Populate required variables (DB URL, ports, etc.) in these files.
 
+* The PostgreSQL connection string format is:
+   ```bash
+   "postgresql://user:pass@localhost:5432/db_name?schema=public"
+   ```
+
 ## Running the Application
 
 All commands should be run from the root of the project. If any command is not working, please check the `package.json` file.
@@ -125,29 +130,29 @@ All commands should be run from the root of the project. If any command is not w
 ### Frontend
 
 1.  **Start the frontend server:**
+    -   For production mode:
+        ```bash
+        npm run frontend:prod
+        ```
     -   For development mode:
         ```bash
         npm run frontend:dev
         ```
-    -   To build for production and then start:
-        ```bash
-        npm run frontend:prod
-        ```
-    The frontend will be accessible, by default, at `http://localhost:5000`.
+    The frontend will be accessible at `http://localhost:5000` (set in `package.json` file).
 
 ## Docker Usage
 
 1. **Build & start services**
 
    ```bash
-   docker-compose up --build
+   docker compose up --build
    ```
 2. **Access**
 
    * Backend API (default): `http://localhost:5005/api/v1`
    * Frontend (default): `http://localhost:5000`
 
-> **Note:** Named Docker volume for PostgreSQL persists data. Use `docker-compose down -v` to clear volumes.
+> **Note:** Named Docker volume for PostgreSQL persists data. Use `docker compose down -v` to clear volumes.
 
 ## Running Tests
 
