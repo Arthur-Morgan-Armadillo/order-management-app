@@ -1,6 +1,6 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { UserService } from './user.service';
-import { IUser, IServerSuccessResponse } from '@shared/interfaces';
+import { IUser, IServerSuccessResponse, EStatus } from '@/common';
 
 @Controller('users')
 export class UserController {
@@ -17,7 +17,7 @@ export class UserController {
 
     this.logger.log(`Returning ${users.length} user(s)`);
     return {
-      status: 'success',
+      status: EStatus.Success,
       payload: {
         data: users,
       },

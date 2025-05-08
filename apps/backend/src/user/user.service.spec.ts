@@ -3,7 +3,7 @@ import { Prisma, User } from '@prisma/client';
 import { jest, describe, it, beforeEach, expect } from '@jest/globals';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
-import { IUser } from '@shared/interfaces';
+import { IUser } from '@/common';
 
 const mockPrismaUsers: User[] = [
   {

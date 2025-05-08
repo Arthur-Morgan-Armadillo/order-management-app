@@ -6,11 +6,11 @@ import { format } from 'date-fns';
 import { jest, describe, it, beforeEach, expect } from '@jest/globals';
 import { OrderService } from './order.service';
 import { OrderRepository } from './order.repository';
-import { UserRepository } from '@/user/user.repository';
-import { ProductRepository } from '@/product/product.repository';
-import { DatabaseService } from '@/database/database.service';
+import { UserRepository } from '@/user';
+import { ProductRepository } from '@/product';
+import { DatabaseService } from '@/database';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { IOrder, IOrderWithRelationsSanitized } from '@shared/interfaces';
+import { IOrder, IOrderWithRelationsSanitized } from '@/common';
 
 const mockUserId = 'user-uuid-123';
 const mockProductId = 'product-uuid-456';

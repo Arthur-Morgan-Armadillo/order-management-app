@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { format } from 'date-fns';
 import { Decimal } from 'decimal.js';
+import { Order } from '@prisma/client';
 import { DatabaseService } from '@/database';
 import { UserRepository } from '@/user';
 import { ProductRepository } from '@/product';
-import { Order } from '@prisma/client';
 import { OrderRepository } from './order.repository';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { IOrder, IOrderWithRelationsSanitized } from '@shared/interfaces';
+import { IOrder, IOrderWithRelationsSanitized } from '@/common';
 
 @Injectable()
 export class OrderService {

@@ -5,7 +5,8 @@ import {
   IOrderWithRelationsSanitized,
   IOrder,
   IServerSuccessResponse,
-} from '@shared/interfaces';
+  EStatus,
+} from '@/common';
 
 @Controller('orders')
 export class OrderController {
@@ -24,7 +25,7 @@ export class OrderController {
 
     this.logger.log(`Retrieved ${orders.length} order(s) for user: ${userId}`);
     return {
-      status: 'success',
+      status: EStatus.Success,
       payload: {
         data: orders,
       },
@@ -45,7 +46,7 @@ export class OrderController {
 
     this.logger.log(`Order created with ID: ${order.id}`);
     return {
-      status: 'success',
+      status: EStatus.Success,
       payload: {
         data: order,
       },

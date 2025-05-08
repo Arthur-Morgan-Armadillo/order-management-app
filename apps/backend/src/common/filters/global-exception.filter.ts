@@ -9,7 +9,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { IServerErrorResponse } from '@shared/interfaces';
+import { IServerErrorResponse, EStatus } from '@/common';
 
 type ValidationErrorMessage = { message: string | string[] };
 
@@ -76,7 +76,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
 
     const responseBody: IServerErrorResponse = {
-      status: 'error',
+      status: EStatus.Error,
       statusCode: httpStatus,
       message: errorMessage,
       error: errorName,

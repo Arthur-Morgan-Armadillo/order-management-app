@@ -1,6 +1,6 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { IProduct, IServerSuccessResponse } from '@shared/interfaces';
+import { IProduct, IServerSuccessResponse, EStatus } from '@/common';
 
 @Controller('products')
 export class ProductController {
@@ -17,7 +17,7 @@ export class ProductController {
 
     this.logger.log(`Returning ${products.length} product(s)`);
     return {
-      status: 'success',
+      status: EStatus.Success,
       payload: {
         data: products,
       },

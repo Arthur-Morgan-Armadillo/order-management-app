@@ -4,7 +4,7 @@ import { Prisma, Product } from '@prisma/client';
 import { jest, describe, it, beforeEach, expect } from '@jest/globals';
 import { ProductService } from './product.service';
 import { ProductRepository } from './product.repository';
-import { IProduct } from '@shared/interfaces';
+import { IProduct } from '@/common';
 
 const mockPrismaProducts: Product[] = [
   {

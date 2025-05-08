@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ProductRepository } from './product.repository';
-import { IProduct } from '@shared/interfaces';
+import { IProduct } from '@/common';
 
 @Injectable()
 export class ProductService {
