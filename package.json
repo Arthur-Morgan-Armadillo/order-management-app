@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "A monolithic order management application",
+  "license": "UNLICENSED",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
@@ -25,6 +26,7 @@
     "prisma:migrate:dev": "cd apps/backend && npx prisma migrate dev",
     "prisma:migrate:deploy": "cd apps/backend && npx prisma migrate deploy",
     "prisma:seed": "cd apps/backend && npx prisma db seed",
+    "prisma:setup": "npm run prisma:generate && npm run prisma:migrate:deploy && npm run prisma:seed",
 
     "frontend:dev": "cd apps/frontend && next dev -p 5000",
     "frontend:build": "cd apps/frontend && next build",
@@ -36,6 +38,7 @@
 
     "app:build": "npm run backend:build && npm run frontend:build",
     "app:start": "npm run backend:start:prod & npm run frontend:start",
+    "app:prod": "npm run app:build && npm run app:start",
     "app:lint": "npm run backend:lint && npm run frontend:lint",
     "app:test": "npm run backend:test && npm run frontend:test",
     "app:typecheck": "npm run backend:typecheck && npm run frontend:typecheck"
